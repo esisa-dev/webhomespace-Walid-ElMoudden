@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="static/css/home.css">
+</head>
+<body>
+    <h1>Welcome, {{ username }}</h1>
+    <p>Your current directory is {{ home_dir }}</p>
+    
+    <h2>Files and Directories Information:</h2>
+    <span>Number of files: {{ files|length }}</span>
+    <span>Number of directories: {{ dirs|length }}</span>
+    <span>Space occupied: {{ space }} MB</span>
+    
+    <div><h5>File Navigation:</h5></div>
+    <!-- <div><h5>Search : </h5></div> -->
+    <form method="GET" action="/">
+        <input type="text" name="search_text" placeholder="Search for a file...">
+        <!-- <input type="text" name="search_name" placeholder="Search by name"> -->
+        <!-- <input type="text" name="search_ext" placeholder="Search by extension"> -->
+        <input type="submit" value="Search">
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Last Modified</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if search_text %}
+            {% for item in files|sort %}
+            <tr>
+                {% if item[-3:] == 'txt'%}
+                  <td><a href="/showFile?filename={{ item.split('/')[-1] }}">{{ item }}</a></td>
+                {% else %}
+                  <td>{{ item }}</td>
+                {% endif %}
+                <td>File</td>
+                <td>{{ file_sizes[item] }} Kb</td>
+                <td>{{ file_times[item] }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            {% for item in files|sort %}
+            <tr>
+              {% if item[-3:] == 'txt'%}
+                <!-- <td><a href="{{ url_for('download') }}">{{ item }}</a></td> -->
+                <td><a href="/showFile?filename={{ item.split('/')[-1] }}">{{ item }}</a></td>
+              {% else %}
+                <td>{{ item }}</td>
+              {% endif %}
+                <td>File</td>
+                <td>{{ file_sizes[item] }} Kb</td>
+                <td>{{ file_times[item] }}</td>
+            </tr>
+            {% endfor %}
+            {% for item in dirs|sort %}
+            <tr>
+                <!-- <td>{{ item }}</td> -->
+                <!-- <td><a href="{{ url_for('index', directory=item) }}">{{ item }}</a></td> -->
+                <td><a href="/showDirectory?directoryname={{ item.split('/')[-1] }}">{{ item }}</a></td>
+                <td>Directory</td>
+                <td></td>
+                <td>{{ dir_times[item] }}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    <div></div>
+    <a href="{{ url_for('download') }}">Click Here To Download Home Directory as ZIP</a>
+    <div></div>
+    <form method="POST" action="{{ url_for('logout') }}">
+      <input type="hidden" name="_method" value="POST">
+      <button type="submit">Logout</button>
+  </form>
+</body>
+</html>
+
+
