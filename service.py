@@ -45,6 +45,6 @@ def getAllFiles(home_dir):
 
 def getSpace(home_dir):
     space = sum(os.path.getsize(os.path.join(home_dir, f)) for f in os.listdir(home_dir) if os.path.isfile(os.path.join(home_dir, f)))
-    space = space / 1024*1024
+    space = round(space / 1024)
     return space
 

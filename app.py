@@ -47,7 +47,7 @@ def index():
                 file_times[item] = time.ctime(os.path.getmtime(os.path.join(home_dir, item)))
             elif os.path.isdir(os.path.join(home_dir, item)):
                 dirs.append(item)
-                dir_times[item] = os.path.getmtime(os.path.join(home_dir, item))
+                dir_times[item] = time.ctime(os.path.getmtime(os.path.join(home_dir, item)))
 
         allFiles = service.getAllFiles(home_dir)
         

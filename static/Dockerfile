@@ -38,4 +38,8 @@ RUN mkdir dir2/dir3
 RUN touch dir2/dir3/a3.sh
 RUN touch dir2/dir3/b3.txt
 
+RUN echo "This is a test for showing file content for text file" > a1.txt
+RUN echo "This is a test for showing file content for text file" > dir1/b2.txt
+RUN echo "This is a test for showing file content for text file" > dir2/b3.txt
+
 WORKDIR /usr/app/src
