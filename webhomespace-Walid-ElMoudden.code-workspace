@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "webhomespace-Walid-ElMoudden",
+			"path": "."
+		}
+	],
+	"settings": {
+		"githubPullRequests.ignoredPullRequestBranches": [
+			"main"
+		]
+	}
+}
